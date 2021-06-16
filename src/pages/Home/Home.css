@@ -24,7 +24,7 @@
 }
 
 .login-form-container > * {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .login-form-container > *:first-child {
@@ -47,9 +47,9 @@
 .input-group-container input {
   width: 100%;
   height: 2rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   border: 2px solid #ccc;
-  border-radius: 1rem;
+  border-radius: 5px;
   outline: none;
   font-size: 0.9rem;
   transition: all 0.3s;
@@ -85,17 +85,20 @@
 }
 
 .form-link {
-  padding: 0.25rem;
   font-size: 1.1rem;
   font-weight: bold;
   color: hsl(200, 100%, 40%);
-  border: 1px solid transparent;
-  border-radius: 5px;
   background-color: inherit;
   outline: none;
   text-decoration: none;
 }
 
 .form-link:hover, .form-link:focus {
+  color: hsl(200, 100%, 50%);
   text-decoration: underline;
+}
+
+.alert-form-message {
+  margin: 0.25rem 0 0 1rem;
+  color: hsl(0, 100%, 50%)
 }
