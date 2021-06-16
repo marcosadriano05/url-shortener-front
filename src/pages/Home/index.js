@@ -13,29 +13,49 @@ const Home = () => {
   async function handleLoginSubmit(data) {
     try {
       const response = await api.post('/login', data);
-      console.log(response);
+      
+      if (response.data.token) {
+        console.log(response.data.token);
+      }
     } catch (error) {
-      console.log(error);
       setIsReqError(true);
     }
   }
 
-  console.log(errors);
+  if (isReqError) {
+    setTimeout(() => {
+      setIsReqError(false);
+    }, 5000);
+  }
 
   return (
     <div className="home-container">
+      { isReqError && (
+        <div className="card-error-info">
+          <span>Email ou senha inválidos</span>
+          <button type="button" onClick={ () => setIsReqError(false) }>X</button>
+        </div>
+      ) }
+
       <form className="login-form-container" onSubmit={handleSubmit(handleLoginSubmit)}>
         <h2>Acesse com sua conta</h2>
+
         <div className="input-group-container">
           <label>Email</label>
           <input type="email" {...register("email", { required: true })} placeholder="Type your email" />
-          { isReqError && <span className="alert-form-message">Credencial inválida</span> }
+          { (errors.email && errors.email.type === 'required') && ( 
+            <span className="alert-form-message">Email é obrigatório</span> 
+          ) }
         </div>
+
         <div className="input-group-container">
           <label>Senha</label>
           <input type="password" {...register("password", { required: true })} placeholder="Type your password" />
-          { isReqError && <span className="alert-form-message">Credencial inválida</span> }
+          { (errors.password && errors.password.type === 'required') && ( 
+            <span className="alert-form-message">Senha é obrigatória</span> 
+          ) }
         </div>
+        
         <button type="submit" className="form-button">Entrar</button>
         <Link to='/signup' className="form-link">
           <span>Ou crie uma conta</span>
