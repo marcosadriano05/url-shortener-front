@@ -18,8 +18,7 @@ const Home = () => {
     if (token) {
       history.push('/dashboard');
     }
-  // eslint-disable-next-line
-  }, []);
+  }, [history]);
 
   async function handleLoginSubmit(data) {
     try {
@@ -56,7 +55,7 @@ const Home = () => {
 
         <div className="input-group-container">
           <label>Email</label>
-          <input type="email" {...register("email", { required: true })} placeholder="Type your email" />
+          <input type="email" {...register("email", { required: true })} placeholder="Digite seu email" />
           { (errors.email && errors.email.type === 'required') && ( 
             <span className="alert-form-message">Email é obrigatório</span> 
           ) }
@@ -64,7 +63,7 @@ const Home = () => {
 
         <div className="input-group-container">
           <label>Senha</label>
-          <input type="password" {...register("password", { required: true })} placeholder="Type your password" />
+          <input type="password" {...register("password", { required: true })} placeholder="Digite sua senha" />
           { (errors.password && errors.password.type === 'required') && ( 
             <span className="alert-form-message">Senha é obrigatória</span> 
           ) }
