@@ -6,12 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import api from '../../services/api';
 
+import CardUrl from '../../components/CardUrl';
+
 import './Dashboard.css';
 
 const Dashboard = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
+  const [urls, setUrls] = useState([]);
+  const [successUrlAdd, setSuccessUrlAdd] = useState(0);
 
   const history = useHistory();
 
@@ -36,6 +40,26 @@ const Dashboard = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    (async function getUrls () {
+      try {
+        const token = localStorage.getItem('token_url_shortener');
+        const response = await api.get('/userurl', { 
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.status === 200) {
+          let reverseArray = [];
+          response.data.forEach(el => reverseArray.unshift(el));
+          setUrls(reverseArray);
+        }
+      } catch (error) {
+        const err = JSON.parse(error.request.response);
+        toast.error(err.message_ptbr);
+      }
+    })();
+  }, [successUrlAdd]);
   
   async function handleUrlSubmit(data) {
     try {
@@ -44,6 +68,7 @@ const Dashboard = () => {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       toast.success(response.data.message_ptbr);
+      setSuccessUrlAdd(successUrlAdd + 1);
     } catch (error) {
       const err = error.request.response;
       console.log(err);
@@ -89,6 +114,11 @@ const Dashboard = () => {
           </form>
 
           <h2>URLs cadastradas</h2>
+          <ul>
+            { urls.map(url => {
+              return <li key={url._id}><CardUrl {...url} /></li>
+            }) }
+          </ul>
         </>
       ) }
     </div>
