@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import api from '../../services/api';
@@ -11,12 +11,22 @@ const Home = () => {
   const [isReqError, setIsReqError] = useState(false);
   const [resMessage, setResMessage] = useState('');
 
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      history.push('/dashboard');
+    }
+  }, []);
+
   async function handleLoginSubmit(data) {
     try {
       const response = await api.post('/login', data);
-      
-      if (response.data.token) {
-        console.log(response.data.token);
+
+      if (response.status === 200 && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        history.push('/dashboard');
       }
     } catch (error) {
       const err = JSON.parse(error.request.response);
