@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Home from './pages/Home'
+import SignUp from './pages/SignUp';
 
 import './App.css';
 
@@ -15,6 +16,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/signup" exact component={SignUp} />
         </Switch>
       </Router>
     </div>
