@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import api from '../../services/api';
@@ -11,10 +11,14 @@ const SignUp = () => {
   const [isReqError, setIsReqError] = useState(false);
   const [resMessage, setResMessage] = useState('');
 
+  const history = useHistory();
+
   async function handleSignUpSubmit(data) {
     try {
       const response = await api.post('/signup', data);
-      console.log(response);
+      if (response.status === 200) {
+        history.push('/');
+      }
     } catch (error) {
       const err = JSON.parse(error.request.response);
       setResMessage(err.message_ptbr);
