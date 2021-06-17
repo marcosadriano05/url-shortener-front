@@ -163,3 +163,24 @@
   margin: 0.25rem 0 0 1rem;
   color: hsl(0, 100%, 50%);
 }
+
+.noauth-message {
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: hsl(200, 100%, 95%);
+  display: flex;
+  flex-direction: column;
+}
+
+.noauth-message span {
+  font-size: 1.1rem;
+}
+
+.noauth-message > * {
+  margin-top: 1rem;
+}
+
+.noauth-message > *:first-child {
+  margin-top: 0;
+}
