@@ -56,9 +56,12 @@ const Dashboard = () => {
         }
       } catch (error) {
         const err = JSON.parse(error.request.response);
-        toast.error(err.message_ptbr);
+        if (isAuth) {
+          toast.error(err.message_ptbr);
+        }
       }
     })();
+  // eslint-disable-next-line
   }, [successUrlAdd]);
   
   async function handleUrlSubmit(data) {

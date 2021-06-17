@@ -14,10 +14,23 @@ const Home = () => {
   const history = useHistory();
   
   useEffect(() => {
-    const token = localStorage.getItem('token_url_shortener');
-    if (token) {
-      history.push('/dashboard');
-    }
+    (async function checkToken() {
+      try {
+        const token = localStorage.getItem('token_url_shortener');
+        if (token) {
+          const response = await api.get('/auth', { 
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+  
+          if (response.data.isAuth) {
+            history.push('/dashboard');
+          }
+        }
+      } catch (error) {
+        let err = JSON.parse(error.request.response);
+        toast.error(err.message_ptbr);
+      }
+    })();
   }, [history]);
 
   async function handleLoginSubmit(data) {
