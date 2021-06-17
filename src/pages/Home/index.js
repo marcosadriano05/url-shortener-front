@@ -14,7 +14,7 @@ const Home = () => {
   const history = useHistory();
   
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token_url_shortener');
     if (token) {
       history.push('/dashboard');
     }
@@ -25,7 +25,7 @@ const Home = () => {
       const response = await api.post('/login', data);
 
       if (response.status === 200 && response.data.token) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token_url_shortener', response.data.token);
         history.push('/dashboard');
       }
     } catch (error) {

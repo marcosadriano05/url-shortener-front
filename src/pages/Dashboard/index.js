@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import api from '../../services/api';
@@ -10,10 +10,12 @@ const Dashboard = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isAuth, setIsAuth] = useState(false);
 
+  const history = useHistory();
+
   useEffect(() => {
     (async function isUserAuth () {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token_url_shortener');
         const response = await api.get('/auth', { 
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -22,13 +24,19 @@ const Dashboard = () => {
           setIsAuth(true);
         }
       } catch (error) {
-        localStorage.removeItem('token');
+        localStorage.removeItem('token_url_shortener');
         setIsAuth(false);
       }
     })();
   }, []);
 
   function handleUrlSubmit(data) {}
+
+  function removeToken() {
+    localStorage.removeItem('token_url_shortener');
+    setIsAuth(false);
+    history.push('/');
+  }
 
   return (
     <div className="dashboard-container">
@@ -42,7 +50,7 @@ const Dashboard = () => {
           <div className="dashboard-header">
             <h1>Dashboard</h1>
             <nav className="nav-header">
-              <button type="button" className="nav-button">Sair</button>
+              <button type="button" className="nav-button" onClick={removeToken}>Sair</button>
             </nav>
           </div>
 
