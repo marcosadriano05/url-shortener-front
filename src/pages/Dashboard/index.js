@@ -30,7 +30,18 @@ const Dashboard = () => {
     })();
   }, []);
 
-  function handleUrlSubmit(data) {}
+  async function handleUrlSubmit(data) {
+    try {
+      const token = localStorage.getItem('token_url_shortener');
+      const response = await api.post('/userurl', data, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      console.log(response);
+    } catch (error) {
+      const err = error.request.response;
+      console.log(err);
+    }
+  }
 
   function removeToken() {
     localStorage.removeItem('token_url_shortener');
