@@ -9,6 +9,7 @@ import './Home.css';
 const Home = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isReqError, setIsReqError] = useState(false);
+  const [resMessage, setResMessage] = useState('');
 
   async function handleLoginSubmit(data) {
     try {
@@ -18,6 +19,8 @@ const Home = () => {
         console.log(response.data.token);
       }
     } catch (error) {
+      const err = JSON.parse(error.request.response);
+      setResMessage(err.message_ptbr);
       setIsReqError(true);
     }
   }
@@ -32,7 +35,7 @@ const Home = () => {
     <div className="home-container">
       { isReqError && (
         <div className="card-error-info">
-          <span>Email ou senha inválidos</span>
+          <span>{resMessage}</span>
           <button type="button" onClick={ () => setIsReqError(false) }>X</button>
         </div>
       ) }
@@ -55,7 +58,7 @@ const Home = () => {
             <span className="alert-form-message">Senha é obrigatória</span> 
           ) }
         </div>
-        
+
         <button type="submit" className="form-button">Entrar</button>
         <Link to='/signup' className="form-link">
           <span>Ou crie uma conta</span>
