@@ -92,6 +92,10 @@
   margin-top: 0;
 }
 
+.dashboard-form-container > span {
+  font-size: 1.1rem;
+}
+
 .input-group-container {
   width: 100%;
   display: flex;

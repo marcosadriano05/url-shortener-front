@@ -11,6 +11,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState({});
 
   const history = useHistory();
 
@@ -24,6 +25,10 @@ const Dashboard = () => {
         
         if (response.data.isAuth) {
           setIsAuth(true);
+          setUser({
+            name: response.data.user_name,
+            email: response.data.user_email
+          });
         }
       } catch (error) {
         localStorage.removeItem('token_url_shortener');
@@ -31,14 +36,13 @@ const Dashboard = () => {
       }
     })();
   }, []);
-
+  
   async function handleUrlSubmit(data) {
     try {
       const token = localStorage.getItem('token_url_shortener');
       const response = await api.post('/userurl', data, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
-      console.log(response);
       toast.success(response.data.message_ptbr);
     } catch (error) {
       const err = error.request.response;
@@ -69,6 +73,7 @@ const Dashboard = () => {
           </div>
 
           <form className="dashboard-form-container" onSubmit={handleSubmit(handleUrlSubmit)}>
+            <span>Bem vindo, { user.name }</span>
             <h2>Gere uma URL curta</h2>
 
             <div className="input-group-container">
@@ -82,6 +87,8 @@ const Dashboard = () => {
             <button type="submit" className="form-button">Gerar URL</button>
             <ToastContainer />
           </form>
+
+          <h2>URLs cadastradas</h2>
         </>
       ) }
     </div>
