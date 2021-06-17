@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import api from '../../services/api';
 
@@ -8,8 +10,6 @@ import './Home.css';
 
 const Home = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [isReqError, setIsReqError] = useState(false);
-  const [resMessage, setResMessage] = useState('');
 
   const history = useHistory();
   
@@ -30,26 +30,12 @@ const Home = () => {
       }
     } catch (error) {
       const err = JSON.parse(error.request.response);
-      setResMessage(err.message_ptbr);
-      setIsReqError(true);
+      toast.error(err.message_ptbr);
     }
-  }
-
-  if (isReqError) {
-    setTimeout(() => {
-      setIsReqError(false);
-    }, 5000);
   }
 
   return (
     <div className="home-container">
-      { isReqError && (
-        <div className="card-error-info">
-          <span>{resMessage}</span>
-          <button type="button" onClick={ () => setIsReqError(false) }>X</button>
-        </div>
-      ) }
-
       <form className="login-form-container" onSubmit={handleSubmit(handleLoginSubmit)}>
         <h2>Acesse com sua conta</h2>
 
@@ -70,6 +56,7 @@ const Home = () => {
         </div>
 
         <button type="submit" className="form-button">Entrar</button>
+        <ToastContainer />
         <Link to='/signup' className="form-link">
           <span>Ou crie uma conta</span>
         </Link>

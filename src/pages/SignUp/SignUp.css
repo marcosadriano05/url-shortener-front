@@ -103,3 +103,26 @@
   margin: 0.25rem 0 0 1rem;
   color: hsl(0, 100%, 50%);
 }
+
+.success-register {
+  width: 100%;
+  max-width: 360px;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: hsl(200, 100%, 99%);
+  display: flex;
+  flex-direction: column;
+}
+
+.success-register span {
+  font-size: 1.1rem;
+}
+
+.success-register > * {
+  margin-top: 1rem;
+}
+
+.success-register > *:first-child {
+  margin-top: 0;
+}

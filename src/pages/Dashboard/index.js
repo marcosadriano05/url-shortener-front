@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import api from '../../services/api';
 
@@ -37,6 +39,7 @@ const Dashboard = () => {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       console.log(response);
+      toast.success(response.data.message_ptbr);
     } catch (error) {
       const err = error.request.response;
       console.log(err);
@@ -77,6 +80,7 @@ const Dashboard = () => {
             </div>
 
             <button type="submit" className="form-button">Gerar URL</button>
+            <ToastContainer />
           </form>
         </>
       ) }
