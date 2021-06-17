@@ -116,7 +116,7 @@ const Dashboard = () => {
             <ToastContainer />
           </form>
 
-          <h2>URLs cadastradas</h2>
+          { urls.length > 0 && <h2>URLs cadastradas</h2> }
           <ul>
             { urls.map(url => {
               return <li key={url._id}><CardUrl {...url} /></li>
