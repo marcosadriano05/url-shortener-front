@@ -12,12 +12,13 @@ const Home = () => {
   const [resMessage, setResMessage] = useState('');
 
   const history = useHistory();
-
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       history.push('/dashboard');
     }
+  // eslint-disable-next-line
   }, []);
 
   async function handleLoginSubmit(data) {
